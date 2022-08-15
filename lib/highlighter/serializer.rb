@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Highlighter
+  # Responsible for instantiating and serializing objects
   module Serializer
     def self.included(base)
       base.extend(ClassMethods)
@@ -36,6 +37,7 @@ module Highlighter
       attr.serializer.new(value).serializable_hash
     end
 
+    # Add methods to expose and set up attributes
     module ClassMethods
       def attribute(name, serializer: nil)
         instance_variable_set(:@attributes, []) unless instance_variable_defined?(:@attributes)
