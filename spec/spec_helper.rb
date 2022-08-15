@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 require "highlighter"
+require "pry"
+
+require_relative "mocks/models/car"
+require_relative "mocks/models/user"
+require_relative "mocks/serializers/car_serializer"
+require_relative "mocks/serializers/user_serializer"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
