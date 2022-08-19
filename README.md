@@ -22,7 +22,69 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+class User
+  attr_accessor :id, :name, :cars
+
+  def initialize(id:, name:, cars:)
+    @id = id
+    @name = name
+    @cars = cars
+  end
+end
+```
+```ruby
+class Car
+  attr_accessor :id, :name, :manufacturer
+
+  def initialize(id:, name:, manufacturer:)
+    @id = id
+    @name = name
+    @manufacturer = manufacturer
+  end
+end
+```
+Then, we should define one serializer for each class:
+```ruby
+class CarSerializer
+  include Highlighter::Serializer
+
+  attribute :id
+  attribute :name
+  attribute :manufacturer
+end
+```
+```ruby
+class UserSerializer
+  include Highlighter::Serializer
+
+  attribute :id
+  attribute :name
+  attribute :cars, serializer: CarSerializer
+end
+```
+```ruby
+cars = [
+      Car.new(id: 1, name: 'Polo', manufacturer: 'VW'),
+      Car.new(id: 2, name: 'Focus', manufacturer: 'Ford')
+    ]
+user = User.new(id: 1, name: "Kelly", cars: cars)
+```
+Now that we have the instances of cars and user in place we just need to instatiate the serializer and call `to_h`
+```ruby
+UserSerializer.new(user).to_h
+```
+And it will return:
+```ruby
+{
+  id: 1,
+  name: "Kelly",
+  cars: [
+          { id: 0, manufacturer: 'Polo', name: 'VW' },
+          { id: 1, manufacturer: 'Focus', name: 'Ford' },
+        ]
+}
+```
 
 ## Development
 
@@ -32,7 +94,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/highlighter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/CaioPenhalver/highlighter.
 
 ## License
 
