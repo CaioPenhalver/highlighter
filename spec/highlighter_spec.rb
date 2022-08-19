@@ -9,7 +9,7 @@ RSpec.describe Highlighter do
   let(:user) { User.new(id: 1, name: "Kelly", cars:) }
   let(:user_serializer) { UserSerializer.new(user) }
 
-  subject { user_serializer.serializable_hash }
+  subject { user_serializer.to_h }
 
   it "return serializable hash" do
     is_expected.to eql(

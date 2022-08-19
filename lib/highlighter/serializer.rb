@@ -11,7 +11,7 @@ module Highlighter
       @object = object
     end
 
-    def serializable_hash
+    def to_h
       self.class.attributes.each_with_object({}) do |attr, hash|
         hash[attr.name] = serialize_attribute(attr)
         hash
@@ -34,7 +34,7 @@ module Highlighter
     def apply_serializer(value, attr)
       return value if attr.serializer.nil?
 
-      attr.serializer.new(value).serializable_hash
+      attr.serializer.new(value).to_h
     end
 
     # Add methods to expose and set up attributes
