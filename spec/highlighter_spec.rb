@@ -25,6 +25,20 @@ RSpec.describe Highlighter do
     )
   end
 
+  context "when there is nil value" do
+    let(:user) { User.new(id: 1, name: nil, cars: nil) }
+
+    it "return serializable hash" do
+      is_expected.to eql(
+        {
+          id: 1,
+          name: nil,
+          cars: nil
+        }
+      )
+    end
+  end
+
   it "has a version number" do
     expect(Highlighter::VERSION).not_to be nil
   end

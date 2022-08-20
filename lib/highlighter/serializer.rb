@@ -12,6 +12,8 @@ module Highlighter
     end
 
     def to_h
+      return if @object.nil?
+
       self.class.attributes.each_with_object({}) do |attr, hash|
         hash[attr.name] = serialize_attribute(attr)
         hash
