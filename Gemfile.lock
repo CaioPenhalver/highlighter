@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    highlighter (0.1.0)
+    highlighter (0.1.1)
 
 GEM
   remote: https://rubygems.org/
