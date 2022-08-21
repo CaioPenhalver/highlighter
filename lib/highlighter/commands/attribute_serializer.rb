@@ -4,7 +4,7 @@ module Highlighter
   module Commands
     # Command to serialize attribute
     class AttributeSerializer
-      def self.call(object:, attribute:, options:)
+      def self.call(object:, attribute:, options: {})
         new(object:, attribute:, options:).call
       end
 
