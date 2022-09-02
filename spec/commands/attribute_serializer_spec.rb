@@ -60,9 +60,4 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
       end
     end
   end
-
-  context "when it is an object" do
-    context "when serializer is a lambda" do
-    end
-  end
 end
