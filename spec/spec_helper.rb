@@ -4,8 +4,10 @@ require "highlighter"
 require "pry"
 
 require_relative "mocks/models/car"
+require_relative "mocks/models/address"
 require_relative "mocks/models/user"
 require_relative "mocks/serializers/car_serializer"
+require_relative "mocks/serializers/address_serializer"
 require_relative "mocks/serializers/user_serializer"
 
 RSpec.configure do |config|

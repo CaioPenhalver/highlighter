@@ -6,4 +6,5 @@ class UserSerializer
   attribute :id
   attribute :name
   attribute :cars, serializer: CarSerializer
+  attribute :address, serializer: ->(options) { options[:address_serializer] }
 end
