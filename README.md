@@ -85,7 +85,19 @@ And it will return:
         ]
 }
 ```
+It also supports lambdas to set serializer on the fly:
+```ruby
+class UserSerializer
+  include Highlighter::Serializer
 
+  attribute :id
+  attribute :name
+  attribute :cars, serializer: ->(options) { options[:custom_serializer] }
+end
+```
+```ruby
+UserSerializer.new(user, custom_serializer: CarSerializer).to_h
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
