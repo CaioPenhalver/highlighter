@@ -15,7 +15,7 @@ module Highlighter
       end
 
       def call
-        value = object.send(attribute.name)
+        value = object.send(attribute.field)
         return serialize_array(value) if value.instance_of? Array
 
         apply_serializer(value, attribute)

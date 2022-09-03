@@ -19,9 +19,9 @@ RSpec.describe Highlighter do
         name: "Kelly",
         address: { id: 1, number: 345, street: "street name" },
         cars: [
-          { id: 0, manufacturer: "Company 0", name: "Name 0" },
-          { id: 1, manufacturer: "Company 1", name: "Name 1" },
-          { id: 2, manufacturer: "Company 2", name: "Name 2" }
+          { id: 0, manufacturer: "Company 0", model: "Name 0" },
+          { id: 1, manufacturer: "Company 1", model: "Name 1" },
+          { id: 2, manufacturer: "Company 2", model: "Name 2" }
         ]
       }
     )

@@ -98,6 +98,21 @@ end
 ```ruby
 UserSerializer.new(user, custom_serializer: CarSerializer).to_h
 ```
+Renaming attribute:
+```ruby
+class UserSerializer
+  include Highlighter::Serializer
+
+  attribute :id
+  attribute :name, rename_to: :full_name
+end
+```
+```ruby
+{
+  id: 1,
+  full_name: "Kelly"
+}
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

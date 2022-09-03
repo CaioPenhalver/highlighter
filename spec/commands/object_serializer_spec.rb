@@ -17,9 +17,9 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
   end
   let(:attributes) do
     [
-      Highlighter::Attribute.new(name: :age),
-      Highlighter::Attribute.new(name: :name),
-      Highlighter::Attribute.new(name: :address, serializer:)
+      Highlighter::Attribute.new(field: :age),
+      Highlighter::Attribute.new(field: :name),
+      Highlighter::Attribute.new(field: :address, serializer:)
     ]
   end
   let(:options) { {} }
@@ -52,6 +52,27 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
         age: 36,
         address: {
           street: "Street name"
+        }
+      }
+    end
+
+    it { is_expected.to eq expected_response }
+  end
+
+  context "when options is passed on" do
+    let(:serializer) do
+      Class.new do
+        include Highlighter::Serializer
+
+        attribute :street, rename_to: :street_name
+      end
+    end
+    let(:expected_response) do
+      {
+        name: "John Wick",
+        age: 36,
+        address: {
+          street_name: "Street name"
         }
       }
     end

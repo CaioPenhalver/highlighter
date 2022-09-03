@@ -23,9 +23,9 @@ module Highlighter
 
   # Add methods to expose and set up attributes
   module ClassMethods
-    def attribute(name, serializer: nil)
+    def attribute(field, serializer: nil, rename_to: nil)
       instance_variable_set(:@attributes, []) unless instance_variable_defined?(:@attributes)
-      instance_variable_get(:@attributes) << Attribute.new(name:, serializer:)
+      instance_variable_get(:@attributes) << Attribute.new(field:, serializer:, rename_to:)
     end
 
     def attributes

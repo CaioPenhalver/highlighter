@@ -4,6 +4,6 @@ class CarSerializer
   include Highlighter::Serializer
 
   attribute :id
-  attribute :name
+  attribute :name, rename_to: :model
   attribute :manufacturer
 end
