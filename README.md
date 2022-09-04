@@ -1,6 +1,6 @@
 # Highlighter
 
-An easy way to serialize ruby ojects :) 
+An easy way to serialize ruby objects :) 
 
 ## Installation
 
