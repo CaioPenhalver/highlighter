@@ -16,7 +16,7 @@ module Highlighter
       return if @object.nil?
 
       Commands::ObjectSerializer.call(object: @object,
-                                      attributes: self.class.attributes,
+                                      attributes: self.class.attribute_list,
                                       options: @options)
     end
   end
@@ -24,12 +24,19 @@ module Highlighter
   # Add methods to expose and set up attributes
   module ClassMethods
     def attribute(field, serializer: nil, rename_to: nil)
-      instance_variable_set(:@attributes, []) unless instance_variable_defined?(:@attributes)
-      instance_variable_get(:@attributes) << Attribute.new(field:, serializer:, rename_to:)
+      attribute_list << Attribute.new(field:, serializer:, rename_to:)
     end
 
-    def attributes
-      instance_variable_get(:@attributes)
+    def attributes(*fields)
+      fields.each do |field|
+        attribute_list << Attribute.new(field:)
+      end
+    end
+
+    def attribute_list
+      instance_variable_set(:@attribute_list, []) unless instance_variable_defined?(:@attribute_list)
+
+      instance_variable_get(:@attribute_list)
     end
   end
 end

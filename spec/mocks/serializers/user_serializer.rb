@@ -3,8 +3,9 @@
 class UserSerializer
   include Highlighter::Serializer
 
+  attributes :name, :email
+
   attribute :id
-  attribute :name
   attribute :cars, serializer: CarSerializer
   attribute :address, serializer: ->(options) { options[:address_serializer] }
 end

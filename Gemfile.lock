@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    highlighter (0.3.0.pre.alpha)
+    highlighter (0.4.0.pre.alpha)
 
 GEM
   remote: https://rubygems.org/

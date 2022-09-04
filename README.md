@@ -113,6 +113,21 @@ end
   full_name: "Kelly"
 }
 ```
+Passing a list of fields:
+```ruby
+class UserSerializer
+  include Highlighter::Serializer
+
+  attributes :id, :name
+end
+```
+```ruby
+{
+  id: 1,
+  name: "Kelly"
+}
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
