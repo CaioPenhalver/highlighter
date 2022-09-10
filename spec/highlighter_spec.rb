@@ -19,6 +19,7 @@ RSpec.describe Highlighter do
         name: "Kelly",
         email: "kelly@mail.com",
         address: { id: 1, number: 345, street: "street name" },
+        description: "My name is Kelly and I have 3 cars",
         cars: [
           { id: 0, manufacturer: "Company 0", model: "Name 0" },
           { id: 1, manufacturer: "Company 1", model: "Name 1" },
@@ -38,7 +39,8 @@ RSpec.describe Highlighter do
           name: nil,
           email: nil,
           cars: nil,
-          address: nil
+          address: nil,
+          description: nil
         }
       )
     end

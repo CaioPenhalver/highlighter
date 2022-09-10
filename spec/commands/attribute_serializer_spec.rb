@@ -20,6 +20,17 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
     it { is_expected.to eq "John Wick" }
   end
 
+  context "when block is given" do
+    let(:object) { Struct.new("MockClass", :full_name).new("John Wick") }
+    let(:attribute) do
+      Highlighter::Attribute.new(field: "full_name") do |object|
+        "I'm #{object.full_name}"
+      end
+    end
+
+    it { is_expected.to eq "I'm John Wick" }
+  end
+
   context "whent it is an array" do
     let(:names) { ["John Wick", "Rambo"] }
     let(:object) { Struct.new("MockClass", :names).new(names) }
