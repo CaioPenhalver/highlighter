@@ -125,6 +125,24 @@ end
   name: "Kelly"
 }
 ```
+Passing a block:
+```ruby
+class UserSerializer
+  include Highlighter::Serializer
+
+  attributes :id, :name
+  attribute :description do |object|
+    "My name is #{object.name}"
+  end
+end
+```
+```ruby
+{
+  id: 1,
+  name: "Kelly",
+  description: "My name is John Wick"
+}
+```
 
 ## Development
 
