@@ -23,8 +23,12 @@ module Highlighter
 
   # Add methods to expose and set up attributes
   module ClassMethods
-    def attribute(field, serializer: nil, rename_to: nil)
-      attribute_list << Attribute.new(field:, serializer:, rename_to:)
+    def attribute(field, serializer: nil, rename_to: nil, &block)
+      attribute_list << if block_given?
+                          Attribute.new(field:, serializer:, rename_to:, &block)
+                        else
+                          Attribute.new(field:, serializer:, rename_to:)
+                        end
     end
 
     def attributes(*fields)
