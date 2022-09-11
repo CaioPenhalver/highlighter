@@ -7,8 +7,19 @@ RSpec.describe Highlighter do
       Car.new(id: i, name: "Name #{i}", manufacturer: "Company #{i}")
     end
   end
-  let(:user) { User.new(id: 1, name: "Kelly", email: "kelly@mail.com", cars:, address:) }
-  let(:user_serializer) { UserSerializer.new(user, address_serializer: AddressSerializer) }
+  let(:user) do
+    User.new(id: 1,
+             name: "Kelly",
+             email: "kelly@mail.com",
+             cars:, address:,
+             bank_account: '123456',
+             country: 'Brazil')
+  end
+  let(:user_serializer) do
+    UserSerializer.new(user,
+                       address_serializer: AddressSerializer,
+                       bank_account: false)
+  end
 
   subject { user_serializer.to_h }
 
@@ -20,6 +31,7 @@ RSpec.describe Highlighter do
         email: "kelly@mail.com",
         address: { id: 1, number: 345, street: "street name" },
         description: "My name is Kelly and I have 3 cars",
+        country: "Brazil",
         cars: [
           { id: 0, manufacturer: "Company 0", model: "Name 0" },
           { id: 1, manufacturer: "Company 1", model: "Name 1" },
@@ -30,7 +42,9 @@ RSpec.describe Highlighter do
   end
 
   context "when there is nil value" do
-    let(:user) { User.new(id: 1, name: nil, email: nil, cars: nil, address: nil) }
+    let(:user) do
+      User.new(id: 1, name: nil, email: nil, cars: nil, address: nil, bank_account: nil, country: nil)
+    end
 
     it "return serializable hash" do
       is_expected.to eql(

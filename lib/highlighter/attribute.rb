@@ -3,12 +3,13 @@
 module Highlighter
   # Holds info on attribute
   class Attribute
-    attr_reader :field, :serializer, :rename_to, :block
+    attr_reader :field, :serializer, :rename_to, :block, :show_if
 
-    def initialize(field:, serializer: nil, rename_to: nil, &block)
+    def initialize(field:, serializer: nil, rename_to: nil, show_if: nil, &block)
       @field = field
       @serializer = serializer
       @rename_to = rename_to
+      @show_if = show_if
       @block = block
     end
 
@@ -18,6 +19,12 @@ module Highlighter
 
     def block?
       !block.nil?
+    end
+
+    def show?(object, options)
+      return true unless show_if.is_a? Proc
+
+      show_if.call(object, options)
     end
   end
 end

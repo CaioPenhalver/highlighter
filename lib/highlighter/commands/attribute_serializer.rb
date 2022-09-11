@@ -15,6 +15,7 @@ module Highlighter
       end
 
       def call
+        return unless attribute.show?(object, options)
         return attribute.block.call(object) if attribute.block?
 
         value = object.send(attribute.field)
