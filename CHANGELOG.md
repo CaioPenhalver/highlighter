@@ -11,3 +11,11 @@
 ## [0.3.0-alpha] - 2022-09-03
 
 - Feature: rename attribute
+
+## [0.4.0-alpha] - 2022-09-04
+
+- Feature: accept list of fields
+
+## [0.5.0-alpha] - 2022-09-09
+
+- Feature: field supports block
