@@ -18,7 +18,7 @@ RSpec.describe Highlighter do
   let(:user_serializer) do
     UserSerializer.new(user,
                        address_serializer: AddressSerializer,
-                       bank_account: false)
+                       show_bank_account: false)
   end
 
   subject { user_serializer.to_h }
