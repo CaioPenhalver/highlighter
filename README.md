@@ -66,11 +66,11 @@ cars = [
       Car.new(id: 1, name: 'Polo', manufacturer: 'VW'),
       Car.new(id: 2, name: 'Focus', manufacturer: 'Ford')
     ]
-user = User.new(id: 1, name: "Kelly", cars: cars)
+user = User.new(id: 1, name: "Kelly", cars: cars, )
 ```
 Now that we have the instances of cars and user in place we just need to instatiate the serializer and call `to_h`
 ```ruby
-UserSerializer.new(user).to_h
+UserSerializer.new(user, show_description: false).to_h
 ```
 And it will return:
 ```ruby
@@ -141,6 +141,22 @@ end
   id: 1,
   name: "Kelly",
   description: "My name is John Wick"
+}
+```
+Hiding field
+```ruby
+class UserSerializer
+  include Highlighter::Serializer
+
+  attributes :id, :name
+  attribute :description, if: ->(_object, options) { option[:show_description] }
+end
+
+```
+```ruby
+{
+  id: 1,
+  name: "Kelly"
 }
 ```
 
