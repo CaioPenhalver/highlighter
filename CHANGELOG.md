@@ -19,3 +19,7 @@
 ## [0.5.0-alpha] - 2022-09-09
 
 - Feature: field supports block
+
+## [0.6.0-alpha] - 2022-11-19
+
+- Feature: add support to choose which fields will be shown

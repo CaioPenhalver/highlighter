@@ -59,7 +59,7 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
     it { is_expected.to eq expected_response }
   end
 
-  context "when options is passed on" do
+  context "when field is renamed" do
     let(:serializer) do
       Class.new do
         include Highlighter::Serializer
@@ -73,6 +73,50 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
         age: 36,
         address: {
           street_name: "Street name"
+        }
+      }
+    end
+
+    it { is_expected.to eq expected_response }
+  end
+
+  context "when field is not shown" do
+    let(:address_serializer) do
+      Class.new do
+        include Highlighter::Serializer
+
+        attribute :street, if: ->(_obj, _options) { false }
+      end
+    end
+    let(:options) { { address_serializer: } }
+    let(:serializer) { ->(options) { options[:address_serializer] } }
+    let(:expected_response) do
+      {
+        name: "John Wick",
+        age: 36,
+        address: {}
+      }
+    end
+
+    it { is_expected.to eq expected_response }
+  end
+
+  context "when field is shown" do
+    let(:address_serializer) do
+      Class.new do
+        include Highlighter::Serializer
+
+        attribute :street, if: ->(_obj, _options) { true }
+      end
+    end
+    let(:options) { { address_serializer: } }
+    let(:serializer) { ->(options) { options[:address_serializer] } }
+    let(:expected_response) do
+      {
+        name: "John Wick",
+        age: 36,
+        address: {
+          street: "Street name"
         }
       }
     end

@@ -31,6 +31,25 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
     it { is_expected.to eq "I'm John Wick" }
   end
 
+  context "when if is given" do
+    let(:object) { Struct.new("MockClass", :full_name).new("John Wick") }
+    let(:attribute) do
+      Highlighter::Attribute.new(field: "full_name", show_if:)
+    end
+
+    context "when attribute is shown" do
+      let(:show_if) { ->(_obj, _options) { true } }
+
+      it { is_expected.to eq "John Wick" }
+    end
+
+    context "when attribute is not shown" do
+      let(:show_if) { ->(_obj, _options) { false } }
+
+      it { is_expected.to eq nil }
+    end
+  end
+
   context "whent it is an array" do
     let(:names) { ["John Wick", "Rambo"] }
     let(:object) { Struct.new("MockClass", :names).new(names) }

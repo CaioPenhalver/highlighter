@@ -16,7 +16,7 @@ module Highlighter
 
       def call
         attributes.each_with_object({}) do |attr, hash|
-          hash[attr.name] = serialize_attribute(attr)
+          hash[attr.name] = serialize_attribute(attr) if attr.show?(object, options)
           hash
         end
       end

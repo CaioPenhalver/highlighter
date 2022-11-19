@@ -14,7 +14,8 @@ module Highlighter
         @options = options
       end
 
-      def call
+      def call # rubocop:disable Metrics/AbcSize
+        return unless attribute.show?(object, options)
         return attribute.block.call(object) if attribute.block?
 
         value = object.send(attribute.field)
