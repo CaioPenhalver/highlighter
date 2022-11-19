@@ -12,14 +12,15 @@ RSpec.describe Highlighter do
              name: "Kelly",
              email: "kelly@mail.com",
              cars:, address:,
-             bank_account: '123456',
-             country: 'Brazil')
+             bank_account: "123456",
+             country: "Brazil")
   end
   let(:user_serializer) do
     UserSerializer.new(user,
                        address_serializer: AddressSerializer,
-                       show_bank_account: false)
+                       show_bank_account:)
   end
+  let(:show_bank_account) { true }
 
   subject { user_serializer.to_h }
 
@@ -32,6 +33,7 @@ RSpec.describe Highlighter do
         address: { id: 1, number: 345, street: "street name" },
         description: "My name is Kelly and I have 3 cars",
         country: "Brazil",
+        bank_account: "123456",
         cars: [
           { id: 0, manufacturer: "Company 0", model: "Name 0" },
           { id: 1, manufacturer: "Company 1", model: "Name 1" },
@@ -53,10 +55,23 @@ RSpec.describe Highlighter do
           name: nil,
           email: nil,
           cars: nil,
+          bank_account: nil,
           address: nil,
           description: nil
         }
       )
+    end
+  end
+
+  it "has a version number" do
+    expect(Highlighter::VERSION).not_to be nil
+  end
+
+  context "when field is not shown" do
+    let(:show_bank_account) { false }
+
+    it "return serializable hash" do
+      is_expected.not_to include(:bank_account)
     end
   end
 

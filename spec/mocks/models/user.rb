@@ -3,7 +3,7 @@
 class User
   attr_accessor :id, :name, :cars, :address, :email, :bank_account, :country
 
-  def initialize(id:, name:, email:, cars:, address:, bank_account:, country:)
+  def initialize(id:, name:, email:, cars:, address:, bank_account:, country:) # rubocop:disable Metrics/ParameterLists
     @id = id
     @name = name
     @email = email
