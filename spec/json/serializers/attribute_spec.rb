@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Highlighter::Commands::AttributeSerializer do
+RSpec.describe Highlighter::JSON::Serializers::Attribute do
   subject { described_class.call(object:, attribute:, options:) }
   let(:options) { {} }
 
@@ -64,7 +64,7 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
       let(:object) { Struct.new("MockClass", :names).new(names) }
       let(:serializer) do
         Class.new do
-          include Highlighter::Serializer
+          include Highlighter::JSON::Serializer
 
           attribute :full_name
         end
@@ -77,7 +77,7 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
       context "when serializer is a lambda" do
         let(:name_serializer) do
           Class.new do
-            include Highlighter::Serializer
+            include Highlighter::JSON::Serializer
 
             attribute :full_name
           end

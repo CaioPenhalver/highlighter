@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AddressSerializer
-  include Highlighter::Serializer
+  include Highlighter::JSON::Serializer
 
   attribute :id
   attribute :street

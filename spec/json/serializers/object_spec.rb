@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-RSpec.describe Highlighter::Commands::ObjectSerializer do
+RSpec.describe Highlighter::JSON::Serializers::Object do
   subject { described_class.call(object:, attributes:, options:) }
 
   let(:address) { Struct.new("MockAddress", :street, :number).new("Street name", 99) }
   let(:object) { Struct.new("MockClass", :age, :name, :address).new(36, "John Wick", address) }
   let(:serializer) do
     Class.new do
-      include Highlighter::Serializer
+      include Highlighter::JSON::Serializer
 
       attribute :street
       attribute :number
@@ -39,7 +39,7 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
   context "when options is passed on" do
     let(:address_serializer) do
       Class.new do
-        include Highlighter::Serializer
+        include Highlighter::JSON::Serializer
 
         attribute :street
       end
@@ -62,7 +62,7 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
   context "when field is renamed" do
     let(:serializer) do
       Class.new do
-        include Highlighter::Serializer
+        include Highlighter::JSON::Serializer
 
         attribute :street, rename_to: :street_name
       end
@@ -83,7 +83,7 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
   context "when field is not shown" do
     let(:address_serializer) do
       Class.new do
-        include Highlighter::Serializer
+        include Highlighter::JSON::Serializer
 
         attribute :street, if: ->(_obj, _options) { false }
       end
@@ -104,7 +104,7 @@ RSpec.describe Highlighter::Commands::ObjectSerializer do
   context "when field is shown" do
     let(:address_serializer) do
       Class.new do
-        include Highlighter::Serializer
+        include Highlighter::JSON::Serializer
 
         attribute :street, if: ->(_obj, _options) { true }
       end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserSerializer
-  include Highlighter::Serializer
+  include Highlighter::JSON::Serializer
 
   attributes :name, :email
 
