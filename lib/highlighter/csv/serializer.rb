@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "csv"
+
 module Highlighter
   module CSV
     # Responsible for instantiating and serializing objects
@@ -8,39 +10,44 @@ module Highlighter
         base.extend(ClassMethods)
       end
 
-      def initialize(object, options = {})
-        @object = object
+      def initialize(list, options = {})
+        @list = list
         @options = options
       end
 
-      def to_h
-        return if @object.nil?
+      def to_csv
+        return if @list.nil? || @list.empty?
 
-        JSON::Serializers::Object.call(object: @object,
-                                       attributes: self.class.attribute_list,
-                                       options: @options)
+        headers = self.class.column_list.map(&:name)
+        ::CSV.generate(write_headers: true, headers:) do |csv|
+          @list.map do |object|
+            csv << headers.map { |h| object.send(h) }
+          end
+        end
       end
+
+      # JSON::Serializers::Object.call(object: @object,
+      #                                attributes: self.class.attribute_list,
+      #                                options: @options)
     end
 
     # Add methods to expose and set up attributes
     module ClassMethods
-      def column(column, **options, &block)
-        attribute_list << Attribute.new(column:,
-                                        # extract_from: options[:extract_from],
-                                        show_if: options[:if],
-                                        &block)
+      def column(name, **_options)
+        column_list << Column.new(name:) # ,
+        # extract_from: options[:extract_from],
+        # show_if: options[:if],
+        # &block)
       end
 
-      def attributes(*fields)
-        fields.each do |field|
-          attribute_list << Attribute.new(field:)
-        end
+      def columns(*names)
+        names.each { |name| column_list << Column.new(name:) }
       end
 
-      def attribute_list
-        instance_variable_set(:@attribute_list, []) unless instance_variable_defined?(:@attribute_list)
+      def column_list
+        instance_variable_set(:@column_list, []) unless instance_variable_defined?(:@column_list)
 
-        instance_variable_get(:@attribute_list)
+        instance_variable_get(:@column_list)
       end
     end
   end

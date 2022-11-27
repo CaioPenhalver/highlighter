@@ -9,6 +9,7 @@ require_relative "mocks/models/user"
 require_relative "mocks/serializers/car_serializer"
 require_relative "mocks/serializers/address_serializer"
 require_relative "mocks/serializers/user_serializer"
+require_relative "mocks/serializers/user_csv_serializer"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
