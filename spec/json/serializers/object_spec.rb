@@ -17,9 +17,9 @@ RSpec.describe Highlighter::JSON::Serializers::Object do
   end
   let(:attributes) do
     [
-      Highlighter::Attribute.new(field: :age),
-      Highlighter::Attribute.new(field: :name),
-      Highlighter::Attribute.new(field: :address, serializer:)
+      Highlighter::JSON::Attribute.new(field: :age),
+      Highlighter::JSON::Attribute.new(field: :name),
+      Highlighter::JSON::Attribute.new(field: :address, serializer:)
     ]
   end
   let(:options) { {} }
