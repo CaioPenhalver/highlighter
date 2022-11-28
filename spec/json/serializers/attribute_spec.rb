@@ -2,20 +2,20 @@
 
 require "spec_helper"
 
-RSpec.describe Highlighter::Commands::AttributeSerializer do
+RSpec.describe Highlighter::JSON::Serializers::Attribute do
   subject { described_class.call(object:, attribute:, options:) }
   let(:options) { {} }
 
   context "when it is a number" do
     let(:object) { Struct.new("MockClass", :age).new(36) }
-    let(:attribute) { Highlighter::Attribute.new(field: "age") }
+    let(:attribute) { Highlighter::JSON::Attribute.new(field: "age") }
 
     it { is_expected.to eq 36 }
   end
 
   context "when it is a string" do
     let(:object) { Struct.new("MockClass", :full_name).new("John Wick") }
-    let(:attribute) { Highlighter::Attribute.new(field: "full_name") }
+    let(:attribute) { Highlighter::JSON::Attribute.new(field: "full_name") }
 
     it { is_expected.to eq "John Wick" }
   end
@@ -23,7 +23,7 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
   context "when block is given" do
     let(:object) { Struct.new("MockClass", :full_name).new("John Wick") }
     let(:attribute) do
-      Highlighter::Attribute.new(field: "full_name") do |object|
+      Highlighter::JSON::Attribute.new(field: "full_name") do |object|
         "I'm #{object.full_name}"
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
   context "when if is given" do
     let(:object) { Struct.new("MockClass", :full_name).new("John Wick") }
     let(:attribute) do
-      Highlighter::Attribute.new(field: "full_name", show_if:)
+      Highlighter::JSON::Attribute.new(field: "full_name", show_if:)
     end
 
     context "when attribute is shown" do
@@ -53,7 +53,7 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
   context "whent it is an array" do
     let(:names) { ["John Wick", "Rambo"] }
     let(:object) { Struct.new("MockClass", :names).new(names) }
-    let(:attribute) { Highlighter::Attribute.new(field: "names") }
+    let(:attribute) { Highlighter::JSON::Attribute.new(field: "names") }
     let(:options) { {} }
 
     it { is_expected.to eq ["John Wick", "Rambo"] }
@@ -64,12 +64,12 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
       let(:object) { Struct.new("MockClass", :names).new(names) }
       let(:serializer) do
         Class.new do
-          include Highlighter::Serializer
+          include Highlighter::JSON::Serializer
 
           attribute :full_name
         end
       end
-      let(:attribute) { Highlighter::Attribute.new(field: "names", serializer:) }
+      let(:attribute) { Highlighter::JSON::Attribute.new(field: "names", serializer:) }
       let(:options) { {} }
 
       it { is_expected.to eq [{ full_name: "John Wick" }, { full_name: "Rambo" }] }
@@ -77,7 +77,7 @@ RSpec.describe Highlighter::Commands::AttributeSerializer do
       context "when serializer is a lambda" do
         let(:name_serializer) do
           Class.new do
-            include Highlighter::Serializer
+            include Highlighter::JSON::Serializer
 
             attribute :full_name
           end

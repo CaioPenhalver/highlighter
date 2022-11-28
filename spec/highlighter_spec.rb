@@ -63,15 +63,43 @@ RSpec.describe Highlighter do
     end
   end
 
-  it "has a version number" do
-    expect(Highlighter::VERSION).not_to be nil
-  end
-
   context "when field is not shown" do
     let(:show_bank_account) { false }
 
     it "return serializable hash" do
       is_expected.not_to include(:bank_account)
+    end
+  end
+
+  context "when serialising to CSV" do
+    let(:users) do
+      [
+        User.new(id: 1,
+                 name: "Kelly",
+                 email: "kelly@mail.com",
+                 cars:, address:,
+                 bank_account: "123456",
+                 country: "Brazil"),
+        User.new(id: 2,
+                 name: "Alice",
+                 email: "alice@mail.com",
+                 cars:, address:,
+                 bank_account: "123456",
+                 country: "Brazil")
+      ]
+    end
+    let(:user_serializer) do
+      UserCsvSerializer.new(users)
+    end
+
+    subject { user_serializer.to_csv }
+
+    it "return serializable CSV" do
+      is_expected.to eql(
+        "id,name,email\n" \
+        "1,Kelly,kelly@mail.com\n" \
+        "2,Alice,alice@mail.com\n"
+      )
     end
   end
 
